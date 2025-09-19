@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import ItemListContainer from "./containers/ItemListContainer";
 import ItemDetailContainer from "./containers/ItemDetailContainer";
-import Cart from "./containers/Cart";
+import Cart from "./pages/Cart"; // ⬅️ corregido: ahora desde /pages
 import { CartProvider } from "./context/CartContext";
 import Checkout from "./containers/Checkout";
-
 
 export default function App() {
   return (
@@ -24,14 +23,15 @@ export default function App() {
 
           {/* Catálogo filtrado */}
           <Route path="/categoria/:categoriaId" element={<ItemListContainer />} />
-          
-          <Route path="/checkout" element={<Checkout />} />
 
           {/* Detalle de producto */}
           <Route path="/producto/:id" element={<ItemDetailContainer />} />
 
           {/* Carrito */}
           <Route path="/cart" element={<Cart />} />
+
+          {/* Checkout */}
+          <Route path="/checkout" element={<Checkout />} />
 
           {/* Página no encontrada */}
           <Route
@@ -43,7 +43,7 @@ export default function App() {
             }
           />
         </Routes>
-    
+      
     </CartProvider>
   );
 }

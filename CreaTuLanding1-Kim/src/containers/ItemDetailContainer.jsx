@@ -1,42 +1,34 @@
-import { useParams } from "react-router-dom";
+// src/containers/ItemDetailContainer.jsx
+import { useParams, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import products from "../data/products";
 import { CartContext } from "../context/CartContext";
+import ItemDetail from "../components/ItemDetail";
 
 export default function ItemDetailContainer() {
-    const { id } = useParams();
-    const product = products.find((p) => p.id === Number(id));
-    const { cart, setCart } = useContext(CartContext);
+  const { id } = useParams();
+  const product = products.find((p) => p.id === Number(id));
+  const { addItem } = useContext(CartContext); // 👈 usar addItem del contexto
+  const navigate = useNavigate();
 
-    if (!product) return <p>Producto no encontrado</p>;
-
-    const addToCart = () => {
-        setCart([...cart, product]);
-    };
-
+  if (!product)
     return (
-        <article style={style}>
-            <h2>{product.name}</h2>
-            <p>{product.description}</p>
-            <p>Precio: ${product.price}</p>
-            <p>Stock: {product.stock}</p>
-            <button onClick={addToCart} style={style.button}>Agregar al carrito</button>
-        </article>
+      <p style={{ padding: 20, textAlign: "center" }}>
+        Producto no encontrado
+      </p>
     );
+
+  const addToCart = (quantity = 1) => {
+    addItem(product, quantity); // 👈 ahora sí agrega con la función del contexto
+  };
+
+  const goToCart = () => navigate("/cart");
+
+  return (
+    <ItemDetail
+      product={product}
+      onAdd={addToCart}
+      onGoToCart={goToCart}
+    />
+  );
 }
-
-const style = {
-    padding: "40px",
-    textAlign: "center",
-    fontSize: "18px",
-    button: {
-        marginTop: "10px",
-        padding: "10px 20px",
-        backgroundColor: "blue",
-        color: "white",
-        border: "none",
-        borderRadius: "5px",
-        cursor: "pointer"
-    }
-};
-
