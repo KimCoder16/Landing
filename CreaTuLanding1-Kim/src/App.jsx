@@ -1,9 +1,11 @@
 // src/App.jsx
+import "./firebaseConfig"; // 👈 se importa primero para inicializar Firebase y hacer el console.log
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import ItemListContainer from "./containers/ItemListContainer";
 import ItemDetailContainer from "./containers/ItemDetailContainer";
-import Cart from "./pages/Cart"; // ⬅️ corregido: ahora desde /pages
+import Cart from "./pages/Cart"; // ⬅️ desde /pages
 import { CartProvider } from "./context/CartContext";
 import Checkout from "./containers/Checkout";
 
